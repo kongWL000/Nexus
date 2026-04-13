@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Evaluation Report — BPR_Nestlé</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6f8; color: #1a1a2e; font-size: 14px; }
+  .header { background: #1a1a2e; color: #fff; padding: 32px 40px 0; }
+  .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: #a0aec0; margin-bottom: 20px; }
+  .stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .stat { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 20px; min-width: 110px; }
+  .stat .value { font-size: 26px; font-weight: 700; color: #fff; }
+  .stat .label { font-size: 11px; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .tabs { display: flex; gap: 4px; padding: 0 40px; }
+  .tab-btn { padding: 10px 22px; font-size: 13px; font-weight: 600; color: #a0aec0; background: transparent; border: none; border-radius: 8px 8px 0 0; cursor: pointer; transition: background 0.15s, color 0.15s; }
+  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .tab-btn.active { background: #f5f6f8; color: #1a1a2e; }
+  .content { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Scorecard */
+  .scorecard { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 28px 32px; display: flex; gap: 0; flex-wrap: wrap; margin-bottom: 24px; }
+  .score-item { flex: 1; min-width: 160px; padding: 0 28px; border-right: 1px solid #f0f0f0; }
+  .score-item:first-child { padding-left: 0; }
+  .score-item:last-child { border-right: none; }
+  .score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; margin-bottom: 8px; }
+  .score-value { font-size: 36px; font-weight: 700; }
+  .score-value.green { color: #16a34a; }
+  .score-value.amber { color: #d97706; }
+  .score-value.red { color: #dc2626; }
+  .score-sub { font-size: 12px; color: #9ca3af; margin-top: 6px; }
+
+  /* Breakdown boxes */
+  .breakdown { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .breakdown-box { flex: 1; min-width: 220px; border-radius: 10px; padding: 20px 24px; }
+  .breakdown-box.tp { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .breakdown-box.fn { background: #fff7ed; border: 1px solid #fed7aa; }
+  .breakdown-box.fp { background: #fef2f2; border: 1px solid #fecaca; }
+  .breakdown-box .bcount { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+  .breakdown-box.tp .bcount { color: #16a34a; }
+  .breakdown-box.fn .bcount { color: #d97706; }
+  .breakdown-box.fp .bcount { color: #dc2626; }
+  .breakdown-box .btitle { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .breakdown-box.tp .btitle { color: #15803d; }
+  .breakdown-box.fn .btitle { color: #b45309; }
+  .breakdown-box.fp .btitle { color: #b91c1c; }
+  .breakdown-box ul { list-style: none; padding: 0; }
+  .breakdown-box ul li { font-size: 12px; color: #374151; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.05); line-height: 1.4; }
+  .breakdown-box ul li:last-child { border-bottom: none; }
+  .breakdown-box ul li .issue-id { font-weight: 700; margin-right: 6px; }
+  .breakdown-box ul li .slide-tag { display: inline-block; background: rgba(0,0,0,0.06); border-radius: 4px; padding: 1px 6px; font-size: 10px; margin-right: 6px; }
+
+  /* Detail table */
+  .section { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 24px; overflow: hidden; }
+  .section-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
+  .section-header h2 { font-size: 15px; font-weight: 600; }
+  .count-badge { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .count-green { background: #f0fdf4; color: #16a34a; }
+  .count-red { background: #fef2f2; color: #dc2626; }
+  .count-amber { background: #fff7ed; color: #d97706; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #f8f9fb; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; padding: 10px 16px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+  td { padding: 10px 16px; border-bottom: 1px solid #f7f7f7; vertical-align: top; line-height: 1.5; font-size: 13px; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { width: 40px; font-weight: 600; color: #9ca3af; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
+  .badge-green { background: #f0fdf4; color: #16a34a; }
+  .badge-red { background: #fef2f2; color: #dc2626; }
+  .badge-orange { background: #fff7ed; color: #ea580c; }
+  .badge-yellow { background: #fefce8; color: #ca8a04; }
+  .correct { color: #16a34a; }
+  .wrong { color: #dc2626; }
+
+  /* Token usage */
+  .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .token-card { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); padding: 14px 18px; }
+  .token-card .rule-name { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+  .token-bar-wrap { background: #f3f4f6; border-radius: 4px; height: 6px; margin-bottom: 6px; }
+  .token-bar { height: 6px; border-radius: 4px; background: #4f46e5; }
+  .token-nums { display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; }
+  .footer { text-align: center; font-size: 12px; color: #9ca3af; padding: 24px 40px 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>BPR_Nestlé — QA Evaluation</h1>
+  <div class="meta">Evaluated against ground truth &nbsp;·&nbsp; 09 Apr 2026</div>
+  <div class="stats">
+    <div class="stat"><div class="value">9.8</div><div class="label">Overall Score</div></div>
+    <div class="stat"><div class="value">96.0%</div><div class="label">Precision</div></div>
+    <div class="stat"><div class="value">100%</div><div class="label">Recall</div></div>
+    <div class="stat"><div class="value">4.0%</div><div class="label">False Positive Rate</div></div>
+    <div class="stat"><div class="value">24</div><div class="label">Real Mistakes</div></div>
+    <div class="stat"><div class="value">25</div><div class="label">Flags Raised</div></div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('summary', this)">Summary</button>
+    <button class="tab-btn" onclick="switchTab('detail', this)">Full Breakdown</button>
+    <button class="tab-btn" onclick="switchTab('tokens', this)">Token Usage</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: SUMMARY -->
+  <div id="tab-summary" class="tab-panel active">
+
+    <!-- Scorecard -->
+    <div class="scorecard">
+      <div class="score-item">
+        <div class="score-label">Overall Score</div>
+        <div class="score-value green">9.8 <span style="font-size:18px;color:#9ca3af">/ 10</span></div>
+        <div class="score-sub">(Precision + Recall) / 2</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Precision</div>
+        <div class="score-value green">96.0%</div>
+        <div class="score-sub">24 correct of 25 flagged</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Recall</div>
+        <div class="score-value green">100.0%</div>
+        <div class="score-sub">24 of 24 real mistakes caught</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">False Positive Rate</div>
+        <div class="score-value amber">4.0%</div>
+        <div class="score-sub">1 wrong flag of 25 raised</div>
+      </div>
+    </div>
+
+    <!-- Breakdown boxes -->
+    <div class="breakdown">
+      <div class="breakdown-box tp">
+        <div class="bcount">24</div>
+        <div class="btitle">Correctly Identified (True Positives)</div>
+        <ul>
+          <li><span class="issue-id">#1</span><span class="slide-tag">Slide 2</span>ToC wrong page references</li>
+          <li><span class="issue-id">#3</span><span class="slide-tag">Slide 5</span>KPI Reach: "1.2 B"</li>
+          <li><span class="issue-id">#4</span><span class="slide-tag">Slide 5</span>KPI Engagement: "58.1 K"</li>
+          <li><span class="issue-id">#5</span><span class="slide-tag">Slide 6</span>Missing comma after "opportunity"</li>
+          <li><span class="issue-id">#6</span><span class="slide-tag">Slide 7</span>Misplaced appositive in Katyal sentence</li>
+          <li><span class="issue-id">#7</span><span class="slide-tag">Slide 7</span>"Twitter" should be "X"</li>
+          <li><span class="issue-id">#8</span><span class="slide-tag">Slide 7</span>@AJPlus follower count inconsistency</li>
+          <li><span class="issue-id">#9</span><span class="slide-tag">Slide 9</span>Volume donut label: "n = 1.4 K"</li>
+          <li><span class="issue-id">#10</span><span class="slide-tag">Slide 9</span>Reach donut label: "n = 1.5 B"</li>
+          <li><span class="issue-id">#11</span><span class="slide-tag">Slide 11</span>Missing space: Reuters'(44.2M)</li>
+          <li><span class="issue-id">#12</span><span class="slide-tag">Slide 12</span>Missing comma after "syndications"</li>
+          <li><span class="issue-id">#13–16</span><span class="slide-tag">Slide 13</span>4× date format errors (DD-Mon-YY)</li>
+          <li><span class="issue-id">#17–21</span><span class="slide-tag">Slide 13</span>5× shortform spacing in article table</li>
+          <li><span class="issue-id">#22–24</span><span class="slide-tag">Slide 14</span>3× date format errors in social table</li>
+          <li><span class="issue-id">#25</span><span class="slide-tag">Other</span>Missing Satismeter feedback link</li>
+        </ul>
+      </div>
+
+      <div class="breakdown-box fn">
+        <div class="bcount">0</div>
+        <div class="btitle">Missed (False Negatives)</div>
+        <ul>
+          <li style="color:#9ca3af;font-style:italic;">None — all real mistakes were caught.</li>
+        </ul>
+      </div>
+
+      <div class="breakdown-box fp">
+        <div class="bcount">1</div>
+        <div class="btitle">Wrong Flags (False Positives)</div>
+        <ul>
+          <li><span class="issue-id">#2</span><span class="slide-tag">Slide 3</span>"performance indicating score" — flagged as grammar error (missing hyphen), but not considered an error in ground truth</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB 2: FULL BREAKDOWN -->
+  <div id="tab-detail" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <h2>True Positives — Correctly Identified</h2>
+        <span class="count-badge count-green">24 / 24</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Slide</th><th>Type</th><th>Current (flagged)</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>2</td><td><span class="badge badge-orange">Content Error</span></td><td>ToC: "15 Nestlé's Media Presence / 23 Competitive Benchmark"</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>3</td><td>5</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>KPI card — Reach: 1.2 B</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>4</td><td>5</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>KPI card — Engagement: 58.1 K</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>5</td><td>6</td><td><span class="badge badge-yellow">Grammar</span></td><td>...Given this opportunity it is vital that...</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>6</td><td>7</td><td><span class="badge badge-yellow">Grammar</span></td><td>Neal Katyal's, corporate lawyer, post about his...</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>7</td><td>7</td><td><span class="badge badge-orange">Content Error</span></td><td>...110K views on Twitter.</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>8</td><td>7</td><td><span class="badge badge-orange">Content Error</span></td><td>@AJPlus (1.2M followers) continued to share...</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>9</td><td>9</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>n = 1.4 K</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>10</td><td>9</td><td><span class="badge badge-orange">Content Error + Shortform Spacing</span></td><td>n = 1.5 B</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>11</td><td>11</td><td><span class="badge badge-yellow">Grammar</span></td><td>...Reuters'(44.2M reach) piece on...</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>12</td><td>12</td><td><span class="badge badge-yellow">Grammar</span></td><td>...including syndications the article accounted for...</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>13</td><td>13</td><td><span class="badge badge-orange">Date Format</span></td><td>11-Sep-24 (Harvard Business Review)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>14</td><td>13</td><td><span class="badge badge-orange">Date Format</span></td><td>05-Sep-24 (Impakter)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>15</td><td>13</td><td><span class="badge badge-orange">Date Format</span></td><td>30-Sep-24 (Financial Times)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>16</td><td>13</td><td><span class="badge badge-orange">Date Format</span></td><td>12-Sep-24 (Eastern Daily Press)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>17</td><td>13</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>5.2 M (HBR Reach)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>18</td><td>13</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>76.7 K (Impakter Reach)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>19</td><td>13</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>13.3 M (Financial Times Reach)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>20</td><td>13</td><td><span class="badge badge-orange">Shortform + Decimal</span></td><td>1.27 M (Eastern Daily Press Reach)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>21</td><td>13</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>169 K (Food Navigator Reach)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>22</td><td>14</td><td><span class="badge badge-orange">Date Format</span></td><td>03-Sep-24 (@MsMaggieMayhem)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>23</td><td>14</td><td><span class="badge badge-orange">Date Format</span></td><td>07-Sep-24 (@ajplus)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>24</td><td>14</td><td><span class="badge badge-orange">Date Format</span></td><td>17-Sep-24 (@EJENCALADA)</td><td class="correct">✓ Correct</td></tr>
+          <tr><td>25</td><td>Other</td><td><span class="badge badge-orange">Missing Feedback Link</span></td><td>No Satismeter survey link present</td><td class="correct">✓ Correct</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>False Positives — Wrong Flags</h2>
+        <span class="count-badge count-red">1</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Slide</th><th>Type</th><th>Current (flagged)</th><th>Why it's wrong</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>2</td>
+            <td>3</td>
+            <td><span class="badge badge-yellow">Grammar</span></td>
+            <td>...a performance indicating score consisting...</td>
+            <td class="wrong">Not in ground truth — "performance indicating score" is acceptable as written; hyphen not required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>False Negatives — Missed Mistakes</h2>
+        <span class="count-badge count-green">0</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Slide</th><th>Type</th><th>What was missed</th></tr></thead>
+        <tbody>
+          <tr><td colspan="4" style="text-align:center;color:#9ca3af;font-style:italic;padding:20px;">All real mistakes were caught — no misses.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- TAB 3: TOKEN USAGE -->
+  <div id="tab-tokens" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <h2>Token Usage by Rule</h2>
+        <span class="count-badge count-green">~12,775 total</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Rule</th><th>Est. Input Tokens</th><th>Est. Output Tokens</th><th>Est. Total</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Content Errors</td><td>1,250</td><td>300</td><td>1,550</td></tr>
+          <tr><td>2</td><td>Shortform Number Spacing</td><td>750</td><td>200</td><td>950</td></tr>
+          <tr><td>3</td><td>Currency Formatting</td><td>750</td><td>0</td><td>750</td></tr>
+          <tr><td>4</td><td>Date Formatting</td><td>500</td><td>250</td><td>750</td></tr>
+          <tr><td>5</td><td>American English</td><td>1,250</td><td>0</td><td>1,250</td></tr>
+          <tr><td>6</td><td>Number Thousand Separator</td><td>750</td><td>0</td><td>750</td></tr>
+          <tr><td>7</td><td>Grammar &amp; Spelling</td><td>1,250</td><td>200</td><td>1,450</td></tr>
+          <tr><td>8</td><td>Data Accuracy</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>9</td><td>Decimal Consistency</td><td>500</td><td>50</td><td>550</td></tr>
+          <tr><td>10</td><td>Hyperlink Validation</td><td>125</td><td>0</td><td>125</td></tr>
+          <tr><td>11</td><td>Chart Axis Labels</td><td>3,750</td><td>50</td><td>3,800</td></tr>
+          <tr><td>12</td><td>Feedback/Survey Link</td><td>50</td><td>50</td><td>100</td></tr>
+          <tr><td>13</td><td>Professional Tone Review</td><td>1,250</td><td>500</td><td>1,750</td></tr>
+          <tr style="font-weight:700;background:#f8f9fb;"><td></td><td>Grand Total</td><td>11,175</td><td>1,600</td><td>12,775</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>Token Usage by Slide</h2>
+      </div>
+      <table>
+        <thead><tr><th>Slide</th><th>Est. Input Tokens</th><th>Est. Output Tokens</th><th>Est. Total</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>80</td><td>20</td><td>100</td></tr>
+          <tr><td>2</td><td>100</td><td>50</td><td>150</td></tr>
+          <tr><td>3</td><td>180</td><td>70</td><td>250</td></tr>
+          <tr><td>4</td><td>80</td><td>20</td><td>100</td></tr>
+          <tr><td>5</td><td>250</td><td>100</td><td>350</td></tr>
+          <tr><td>6</td><td>300</td><td>100</td><td>400</td></tr>
+          <tr><td>7</td><td>380</td><td>120</td><td>500</td></tr>
+          <tr><td>8</td><td>280</td><td>70</td><td>350</td></tr>
+          <tr><td>9</td><td>350</td><td>100</td><td>450</td></tr>
+          <tr><td>10</td><td>320</td><td>80</td><td>400</td></tr>
+          <tr><td>11</td><td>430</td><td>120</td><td>550</td></tr>
+          <tr><td>12</td><td>430</td><td>120</td><td>550</td></tr>
+          <tr><td>13</td><td>600</td><td>200</td><td>800</td></tr>
+          <tr><td>14</td><td>550</td><td>150</td><td>700</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">Generated by pptx-qa-evaluator-v2 &nbsp;·&nbsp; 09 Apr 2026</div>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
