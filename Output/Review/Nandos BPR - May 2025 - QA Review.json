@@ -1,0 +1,150 @@
+{
+  "evaluation_mode": true,
+  "total_issues": 18,
+  "slides": [
+    {
+      "slide": 1,
+      "issue_count": 4,
+      "issues": [
+        {
+          "id": 1,
+          "type": "Wrong client name",
+          "location": "Icon label, filter icon",
+          "current": "Global Media Coverage on Wells Fargo and Competitors",
+          "correct": "Global Media Coverage on Nando's and Competitors"
+        },
+        {
+          "id": 2,
+          "type": "Draft artefact",
+          "location": "Notes panel",
+          "current": "Testing – can you catch this?",
+          "correct": "Remove before distribution"
+        },
+        {
+          "id": 3,
+          "type": "American English",
+          "location": "VOLUME metric definition",
+          "current": "...posts mentioning the analysed brands, within...",
+          "correct": "...posts mentioning the analyzed brands, within..."
+        },
+        {
+          "id": 4,
+          "type": "American English",
+          "location": "ENGAGEMENT metric definition",
+          "current": "...comments, shares, favourites).",
+          "correct": "...comments, shares, favorites)."
+        }
+      ]
+    },
+    {
+      "slide": 2,
+      "issue_count": 8,
+      "issues": [
+        {
+          "id": 5,
+          "type": "Number formatting",
+          "location": "Body text, paragraph 1",
+          "current": "...media traction with 4218, reaching...",
+          "correct": "...media traction with 4,218, reaching..."
+        },
+        {
+          "id": 6,
+          "type": "Grammar",
+          "location": "Body text, paragraph 4, instance 1 of 2",
+          "current": "Positive account for 49% of",
+          "correct": "Positive sentiment accounts for 49% of"
+        },
+        {
+          "id": 7,
+          "type": "Shortform spacing",
+          "location": "Body text, paragraph 4, instance 2 of 2",
+          "current": "...which generated 5.2 K engagements...",
+          "correct": "...which generated 5.2K engagements..."
+        },
+        {
+          "id": 8,
+          "type": "Wrong brand name",
+          "location": "Body text, paragraph 5, instance 1 of 3",
+          "current": "...competitors, McDoanald's lead with...",
+          "correct": "...competitors, McDonald's lead with..."
+        },
+        {
+          "id": 9,
+          "type": "Shortform spacing",
+          "location": "Body text, paragraph 5, instance 2 of 3",
+          "current": "...highest AVE of R12.3 M, driven...",
+          "correct": "...highest AVE of R12.3M, driven..."
+        },
+        {
+          "id": 10,
+          "type": "Wrong brand name",
+          "location": "Body text, paragraph 5, instance 3 of 3",
+          "current": "...of volume. Nandzo's held a...",
+          "correct": "...of volume. Nando's held a..."
+        },
+        {
+          "id": 11,
+          "type": "Currency formatting",
+          "location": "KPI card — AVE",
+          "current": "R 8.3M",
+          "correct": "R8.3M"
+        },
+        {
+          "id": 12,
+          "type": "American English + Date formatting",
+          "location": "Body text, paragraph 6",
+          "current": "Data was analysed in 21/05/2025",
+          "correct": "Data was analyzed in 21 May 2025"
+        }
+      ]
+    },
+    {
+      "slide": 3,
+      "issue_count": 6,
+      "issues": [
+        {
+          "id": 13,
+          "type": "American English",
+          "location": "Slide title",
+          "current": "...unique humour and comparison...",
+          "correct": "...unique humor and comparison..."
+        },
+        {
+          "id": 14,
+          "type": "American English",
+          "location": "Body text, bullet 1",
+          "current": "...Nandos' unique humour prompted...",
+          "correct": "...Nandos' unique humor prompted..."
+        },
+        {
+          "id": 15,
+          "type": "Shortform spacing",
+          "location": "Body text, bullet 2",
+          "current": "...prompting over 1 K reshares.",
+          "correct": "...prompting over 1K reshares."
+        },
+        {
+          "id": 16,
+          "type": "Shortform spacing",
+          "location": "Body text, bullet 4",
+          "current": "...@MphoPopps (132.1 K followers)...",
+          "correct": "...@MphoPopps (132.1K followers)..."
+        },
+        {
+          "id": 17,
+          "type": "Shortform spacing",
+          "location": "Body text, bullet 5",
+          "current": "...IOL (3.0 M reach) on...",
+          "correct": "...IOL (3.0M reach) on..."
+        },
+        {
+          "id": 18,
+          "type": "American English",
+          "location": "Footer",
+          "current": "Data analysed on this page:",
+          "correct": "Data analyzed on this page:"
+        }
+      ]
+    }
+  ]
+}

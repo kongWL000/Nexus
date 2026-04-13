@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Review — BPR_Nestlé</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6f8; color: #1a1a2e; font-size: 14px; }
+  .header { background: #1a1a2e; color: #fff; padding: 32px 40px 0; }
+  .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: #a0aec0; margin-bottom: 20px; }
+  .stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .stat { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 20px; min-width: 110px; }
+  .stat .value { font-size: 26px; font-weight: 700; color: #fff; }
+  .stat .label { font-size: 11px; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .tabs { display: flex; gap: 4px; padding: 0 40px; }
+  .tab-btn { padding: 10px 22px; font-size: 13px; font-weight: 600; color: #a0aec0; background: transparent; border: none; border-radius: 8px 8px 0 0; cursor: pointer; transition: background 0.15s, color 0.15s; letter-spacing: 0.2px; }
+  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .tab-btn.active { background: #f5f6f8; color: #1a1a2e; }
+  .content { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .slide-section { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 24px; overflow: hidden; }
+  .slide-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
+  .slide-header h2 { font-size: 15px; font-weight: 600; }
+  .issue-count { background: #eef2ff; color: #4f46e5; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .tone-count { background: #f0fdf4; color: #16a34a; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #f8f9fb; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; padding: 10px 16px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+  td { padding: 10px 16px; border-bottom: 1px solid #f7f7f7; vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { width: 40px; font-weight: 600; color: #9ca3af; font-size: 13px; }
+  td:nth-child(2) { width: 200px; }
+  td:nth-child(3), td:nth-child(4) { font-size: 13px; color: #374151; }
+  .tone-table td:nth-child(2) { width: 180px; }
+  .tone-table td:nth-child(3) { width: 160px; }
+  .tone-table td:nth-child(4), .tone-table td:nth-child(5) { font-size: 13px; color: #374151; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+  .badge-red    { background: #fef2f2; color: #dc2626; }
+  .badge-orange { background: #fff7ed; color: #ea580c; }
+  .badge-yellow { background: #fefce8; color: #ca8a04; }
+  .badge-blue   { background: #eff6ff; color: #2563eb; }
+  .badge-purple { background: #faf5ff; color: #7c3aed; }
+  .badge-grey   { background: #f9fafb; color: #6b7280; }
+  .badge-pink   { background: #fdf2f8; color: #db2777; }
+  .badge-green  { background: #f0fdf4; color: #16a34a; }
+  .correct { color: #16a34a; }
+  .suggested { color: #1d4ed8; font-style: italic; }
+  .original { color: #374151; }
+  .other-section .slide-header { background: #fafafa; }
+  .other-section .issue-count { background: #fef9c3; color: #854d0e; }
+  .footer { text-align: center; font-size: 12px; color: #9ca3af; padding: 24px 40px 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>BPR_Nestlé</h1>
+  <div class="meta">QA Review &nbsp;·&nbsp; 09 Apr 2026</div>
+  <div class="stats">
+    <div class="stat"><div class="value">25</div><div class="label">Total Issues</div></div>
+    <div class="stat"><div class="value">10</div><div class="label">Slides Affected</div></div>
+    <div class="stat"><div class="value">1</div><div class="label">Other Issues</div></div>
+    <div class="stat"><div class="value">6</div><div class="label">Writing Suggestions</div></div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('issues', this)">Issues by Slide</button>
+    <button class="tab-btn" onclick="switchTab('tone', this)">Writing Suggestions</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: ISSUES BY SLIDE -->
+  <div id="tab-issues" class="tab-panel active">
+
+    <!-- Slide 2 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 2</h2>
+        <span class="issue-count">1 issue</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><span class="badge badge-red">Content Error</span></td>
+            <td>ToC: "15 Nestlé's Media Presence / 23 Competitive Benchmark"</td>
+            <td class="correct">"Nestlé's Media Presence" starts at p.4 in this deck (ToC shows p.15); "Competitive Benchmark" (p.23) is absent from this 14-slide deck — update page references or add missing section</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 3</h2>
+        <span class="issue-count">1 issue</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>2</td>
+            <td><span class="badge badge-yellow">Grammar</span></td>
+            <td>...a performance indicating score consisting...</td>
+            <td class="correct">...a performance-indicating score consisting...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 5</h2>
+        <span class="issue-count">2 issues</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>3</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>KPI card — Reach: 1.2 B</td>
+            <td class="correct">1.2B</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>KPI card — Engagement: 58.1 K</td>
+            <td class="correct">58.1K</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 6</h2>
+        <span class="issue-count">1 issue</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>5</td>
+            <td><span class="badge badge-yellow">Grammar</span></td>
+            <td>...Given this opportunity it is vital that...</td>
+            <td class="correct">...Given this opportunity, it is vital that...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 7</h2>
+        <span class="issue-count">3 issues</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>6</td>
+            <td><span class="badge badge-yellow">Grammar</span></td>
+            <td>Neal Katyal's, corporate lawyer, post about his...</td>
+            <td class="correct">Corporate lawyer Neal Katyal's post about his...</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td><span class="badge badge-red">Content Error</span></td>
+            <td>...110K views on Twitter.</td>
+            <td class="correct">...110K views on X. (platform rebranded July 2023; all other references in this report use "X")</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><span class="badge badge-red">Content Error</span></td>
+            <td>@AJPlus (1.2M followers) continued to share...</td>
+            <td class="correct">Follower count inconsistent with Slide 5, which states "@AJPlus (1.3M followers)" — verify and align to correct figure</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 9</h2>
+        <span class="issue-count">2 issues</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>9</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>Chart — Volume donut, centre label: n = 1.4 K</td>
+            <td class="correct">n = 1.4K</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td><span class="badge badge-red">Content Error + Shortform Spacing</span></td>
+            <td>Chart — Reach donut, centre label: n = 1.5 B</td>
+            <td class="correct">n = 1.2B (remove space; verify correct total — KPI shows Reach = 1.2B; same label also copied incorrectly to Engagement chart on Slide 10)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 11</h2>
+        <span class="issue-count">1 issue</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>11</td>
+            <td><span class="badge badge-yellow">Grammar</span></td>
+            <td>...Reuters'(44.2M reach) piece on...</td>
+            <td class="correct">...Reuters' (44.2M reach) piece on...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 12</h2>
+        <span class="issue-count">1 issue</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>12</td>
+            <td><span class="badge badge-yellow">Grammar</span></td>
+            <td>...including syndications the article accounted for...</td>
+            <td class="correct">...including syndications, the article accounted for...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 13</h2>
+        <span class="issue-count">9 issues</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>13</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, Harvard Business Review — Date: 11-Sep-24</td>
+            <td class="correct">11 Sep 2024</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, Impakter — Date: 05-Sep-24</td>
+            <td class="correct">05 Sep 2024</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, Financial Times — Date: 30-Sep-24</td>
+            <td class="correct">30 Sep 2024</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, Eastern Daily Press — Date: 12-Sep-24</td>
+            <td class="correct">12 Sep 2024</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>Table, Harvard Business Review — Reach: 5.2 M</td>
+            <td class="correct">5.2M</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>Table, Impakter — Reach: 76.7 K</td>
+            <td class="correct">76.7K</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>Table, Financial Times — Reach: 13.3 M</td>
+            <td class="correct">13.3M</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td><span class="badge badge-orange">Shortform Spacing + Decimal Consistency</span></td>
+            <td>Table, Eastern Daily Press — Reach: 1.27 M</td>
+            <td class="correct">1.3M (remove space; round to 1dp to match report standard)</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td><span class="badge badge-orange">Shortform Spacing</span></td>
+            <td>Table, Food Navigator — Reach: 169 K</td>
+            <td class="correct">169K</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 14</h2>
+        <span class="issue-count">3 issues</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>22</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, @MsMaggieMayhem — Date: 03-Sep-24</td>
+            <td class="correct">03 Sep 2024</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, @ajplus — Date: 07-Sep-24</td>
+            <td class="correct">07 Sep 2024</td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td><span class="badge badge-orange">Date Format</span></td>
+            <td>Table, @EJENCALADA — Date: 17-Sep-24</td>
+            <td class="correct">17 Sep 2024</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Other Issues -->
+    <div class="slide-section other-section">
+      <div class="slide-header">
+        <h2>Other Issues</h2>
+        <span class="issue-count">1 issue</span>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>25</td>
+            <td><span class="badge badge-pink">Missing Feedback Link</span></td>
+            <td>No Satismeter survey link present in deck</td>
+            <td class="correct">Add a hyperlink containing https://app.satismeter.com/survey?...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- TAB 2: WRITING SUGGESTIONS -->
+  <div id="tab-tone" class="tab-panel">
+
+    <!-- Slide 5 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 5</h2>
+        <span class="tone-count">2 suggestions</span>
+      </div>
+      <table class="tone-table">
+        <thead>
+          <tr><th>#</th><th>Location</th><th>Reason</th><th>Original</th><th>Suggested</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Body text, paragraph 1</td>
+            <td><span class="badge badge-green">Informal language</span></td>
+            <td class="original">Nestlé saw a significant drop in coverage volume and reach across mainstream and social media. Importantly, the drop was largely due to a drop in negative coverage.</td>
+            <td class="suggested">Nestlé recorded a significant decline in coverage volume and reach across mainstream and social media. Notably, this decline was predominantly driven by a reduction in negative coverage.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Body text, paragraph 5</td>
+            <td><span class="badge badge-green">Informal language</span></td>
+            <td class="original">The U.S. and European markets continued to dominate, despite seeing drops in coverage.</td>
+            <td class="suggested">The U.S. and European markets maintained dominance despite recording coverage declines.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 9</h2>
+        <span class="tone-count">1 suggestion</span>
+      </div>
+      <table class="tone-table">
+        <thead>
+          <tr><th>#</th><th>Location</th><th>Reason</th><th>Original</th><th>Suggested</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3</td>
+            <td>Body text, paragraph 2</td>
+            <td><span class="badge badge-green">Vague phrasing</span></td>
+            <td class="original">Key topics of discussion surrounded topics around sustainability and slavery.</td>
+            <td class="suggested">Key areas of discussion centred on sustainability and modern slavery.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 10</h2>
+        <span class="tone-count">2 suggestions</span>
+      </div>
+      <table class="tone-table">
+        <thead>
+          <tr><th>#</th><th>Location</th><th>Reason</th><th>Original</th><th>Suggested</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>4</td>
+            <td>Body text, paragraph 1</td>
+            <td><span class="badge badge-green">Informal language</span></td>
+            <td class="original">Like last month, X  continued to be the key driver of social coverage, followed closely by Facebook.</td>
+            <td class="suggested">Consistent with the previous month, X remained the primary driver of social coverage, followed closely by Facebook.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Body text, paragraph 3</td>
+            <td><span class="badge badge-green">Vague phrasing</span></td>
+            <td class="original">X coverage around child slavery saw 115K views and garnered 3.7K engagements.</td>
+            <td class="suggested">X posts related to child slavery generated 115K views and 3.7K engagements.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide-section">
+      <div class="slide-header">
+        <h2>Slide 11</h2>
+        <span class="tone-count">1 suggestion</span>
+      </div>
+      <table class="tone-table">
+        <thead>
+          <tr><th>#</th><th>Location</th><th>Reason</th><th>Original</th><th>Suggested</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>6</td>
+            <td>Body text, paragraph 1</td>
+            <td><span class="badge badge-green">Informal language</span></td>
+            <td class="original">Despite extensive reach, articles from these outlets failed to garner impressive social echo.</td>
+            <td class="suggested">Despite their extensive reach, articles from these outlets generated limited social echo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">Generated by pptx-qa-review-v8 &nbsp;·&nbsp; 09 Apr 2026</div>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

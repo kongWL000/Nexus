@@ -1,0 +1,73 @@
+{
+  "pptx_file": "BPR_Nestlé.pptx",
+  "review_date": "2026-04-09",
+  "total_suggestions": 6,
+  "slides": [
+    {
+      "slide": 5,
+      "suggestion_count": 2,
+      "suggestions": [
+        {
+          "id": 1,
+          "location": "Body text, paragraph 1",
+          "original": "Nestlé saw a significant drop in coverage volume and reach across mainstream and social media. Importantly, the drop was largely due to a drop in negative coverage.",
+          "suggested": "Nestlé recorded a significant decline in coverage volume and reach across mainstream and social media. Notably, this decline was predominantly driven by a reduction in negative coverage.",
+          "reason": "Informal language"
+        },
+        {
+          "id": 2,
+          "location": "Body text, paragraph 5",
+          "original": "The U.S. and European markets continued to dominate, despite seeing drops in coverage.",
+          "suggested": "The U.S. and European markets maintained dominance despite recording coverage declines.",
+          "reason": "Informal language"
+        }
+      ]
+    },
+    {
+      "slide": 9,
+      "suggestion_count": 1,
+      "suggestions": [
+        {
+          "id": 3,
+          "location": "Body text, paragraph 2",
+          "original": "Key topics of discussion surrounded topics around sustainability and slavery.",
+          "suggested": "Key areas of discussion centred on sustainability and modern slavery.",
+          "reason": "Vague phrasing"
+        }
+      ]
+    },
+    {
+      "slide": 10,
+      "suggestion_count": 2,
+      "suggestions": [
+        {
+          "id": 4,
+          "location": "Body text, paragraph 1",
+          "original": "Like last month, X  continued to be the key driver of social coverage, followed closely by Facebook.",
+          "suggested": "Consistent with the previous month, X remained the primary driver of social coverage, followed closely by Facebook.",
+          "reason": "Informal language"
+        },
+        {
+          "id": 5,
+          "location": "Body text, paragraph 3",
+          "original": "X coverage around child slavery saw 115K views and garnered 3.7K engagements.",
+          "suggested": "X posts related to child slavery generated 115K views and 3.7K engagements.",
+          "reason": "Vague phrasing"
+        }
+      ]
+    },
+    {
+      "slide": 11,
+      "suggestion_count": 1,
+      "suggestions": [
+        {
+          "id": 6,
+          "location": "Body text, paragraph 1",
+          "original": "Despite extensive reach, articles from these outlets failed to garner impressive social echo.",
+          "suggested": "Despite their extensive reach, articles from these outlets generated limited social echo.",
+          "reason": "Informal language"
+        }
+      ]
+    }
+  ]
+}

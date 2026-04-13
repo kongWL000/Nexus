@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Evaluation Report — Nandos BPR - May 2025</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6f8; color: #1a1a2e; font-size: 14px; }
+
+  /* HEADER */
+  .header { background: #1a1a2e; color: #fff; padding: 32px 40px 0; }
+  .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: #a0aec0; margin-bottom: 20px; }
+  .stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .stat { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 20px; min-width: 110px; }
+  .stat .value { font-size: 26px; font-weight: 700; color: #fff; }
+  .stat .label { font-size: 11px; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; padding: 0 40px; }
+  .tab-btn {
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #a0aec0;
+    background: transparent;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.2px;
+  }
+  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .tab-btn.active { background: #f5f6f8; color: #1a1a2e; }
+
+  /* CONTENT */
+  .content { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SCORECARD */
+  .scorecard { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 24px 28px; display: flex; gap: 0; flex-wrap: wrap; margin-bottom: 20px; }
+  .score-item { flex: 1; min-width: 160px; padding: 0 24px; border-right: 1px solid #f0f0f0; }
+  .score-item:first-child { padding-left: 0; }
+  .score-item:last-child { border-right: none; }
+  .score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; margin-bottom: 6px; }
+  .score-value { font-size: 32px; font-weight: 700; }
+  .score-value.green { color: #16a34a; }
+  .score-value.amber { color: #d97706; }
+  .score-sub { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+
+  .breakdown { display: flex; gap: 16px; flex-wrap: wrap; }
+  .breakdown-box { flex: 1; min-width: 200px; border-radius: 8px; padding: 16px 20px; }
+  .breakdown-box.tp { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .breakdown-box.fn { background: #fff7ed; border: 1px solid #fed7aa; }
+  .breakdown-box.fp { background: #fef2f2; border: 1px solid #fecaca; }
+  .breakdown-box .bcount { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .breakdown-box.tp .bcount { color: #16a34a; }
+  .breakdown-box.fn .bcount { color: #ea580c; }
+  .breakdown-box.fp .bcount { color: #dc2626; }
+  .breakdown-box .btitle { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; color: #374151; }
+  .breakdown-box ul { padding-left: 16px; font-size: 12px; color: #4b5563; line-height: 1.8; }
+
+  /* ISSUES TABLES */
+  .slide-section { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 20px; overflow: hidden; }
+  .slide-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
+  .slide-header h2 { font-size: 15px; font-weight: 600; }
+  .issue-count { background: #eef2ff; color: #4f46e5; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #f8f9fb; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; padding: 10px 16px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+  td { padding: 10px 16px; border-bottom: 1px solid #f7f7f7; vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { width: 40px; font-weight: 600; color: #9ca3af; font-size: 13px; }
+  td:nth-child(2) { width: 170px; }
+  td:nth-child(3), td:nth-child(4) { font-size: 13px; color: #374151; }
+  .correct { color: #16a34a; }
+
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+  .badge-red    { background: #fef2f2; color: #dc2626; }
+  .badge-orange { background: #fff7ed; color: #ea580c; }
+  .badge-yellow { background: #fefce8; color: #ca8a04; }
+  .badge-blue   { background: #eff6ff; color: #2563eb; }
+  .badge-purple { background: #faf5ff; color: #7c3aed; }
+  .badge-grey   { background: #f9fafb; color: #6b7280; }
+  .badge-pink   { background: #fdf2f8; color: #db2777; }
+
+  .other-section .slide-header { background: #fafafa; }
+  .other-section .issue-count { background: #fef9c3; color: #854d0e; }
+
+  /* TOKEN TABLES */
+  .token-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 20px; }
+  .token-card-title { padding: 14px 20px; font-size: 14px; font-weight: 600; border-bottom: 1px solid #f0f0f0; }
+  .token-table td { font-size: 13px; }
+  .token-table tr.total-row td { background: #f0fdf4; font-weight: 700; color: #16a34a; }
+  .token-table td.num { text-align: right; font-variant-numeric: tabular-nums; color: #374151; }
+  .token-table th.num { text-align: right; }
+  .token-footnote { font-size: 11px; color: #9ca3af; padding: 10px 16px; border-top: 1px solid #f7f7f7; font-style: italic; }
+
+  .footer { text-align: center; font-size: 12px; color: #9ca3af; padding: 24px 40px 40px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Nandos BPR - May 2025 - Short</h1>
+  <div class="meta">QA Evaluation Report &nbsp;·&nbsp; 9 Apr 2026</div>
+  <div class="stats">
+    <div class="stat"><div class="value">18</div><div class="label">Issues Found</div></div>
+    <div class="stat"><div class="value">15</div><div class="label">Correct Flags</div></div>
+    <div class="stat"><div class="value">3</div><div class="label">Slides Affected</div></div>
+    <div class="stat"><div class="value">8.3</div><div class="label">Overall Score</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('scores', this)">Evaluation Scores</button>
+    <button class="tab-btn" onclick="switchTab('issues', this)">Issues by Slide</button>
+    <button class="tab-btn" onclick="switchTab('tokens', this)">Token Usage (Estimated)</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: EVALUATION SCORES -->
+  <div id="tab-scores" class="tab-panel active">
+    <div class="scorecard">
+      <div class="score-item">
+        <div class="score-label">Overall Score</div>
+        <div class="score-value green">8.3<span style="font-size:16px;font-weight:400;color:#9ca3af"> / 10</span></div>
+        <div class="score-sub">Excellent</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Precision</div>
+        <div class="score-value green">90.9%</div>
+        <div class="score-sub">18 flagged, 2 wrong</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Recall</div>
+        <div class="score-value amber">75.0%</div>
+        <div class="score-sub">20 real, 5 missed</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">False Positive Rate</div>
+        <div class="score-value green">9.1%</div>
+        <div class="score-sub">2 of 18 flags wrong</div>
+      </div>
+    </div>
+
+    <div class="breakdown">
+      <div class="breakdown-box tp">
+        <div class="btitle">✓ Correctly Identified</div>
+        <div class="bcount">15</div>
+        <ul>
+          <li>Wrong client name (Wells Fargo)</li>
+          <li>Draft note in notes panel</li>
+          <li>Currency spacing — R 8.3M</li>
+          <li>Shortform spacing — 1 K, 66.2 B, 17.9 K</li>
+          <li>Date format — 01/05/2025</li>
+          <li>American English — analysed, summarised</li>
+          <li>Grammar — "Positive account for 49%"</li>
+          <li>Number formatting — 4218</li>
+          <li>Broken link — 404 Not Found</li>
+          <li>+ 6 more</li>
+        </ul>
+      </div>
+      <div class="breakdown-box fn">
+        <div class="btitle">✗ Missed</div>
+        <div class="bcount">5</div>
+        <ul>
+          <li>Missing axis label on slide 4</li>
+          <li>Decimal inconsistency — 8.33M</li>
+          <li>Currency spacing — $ 2.1M</li>
+          <li>Brand misspelling — "Nandos" (slide 3)</li>
+          <li>Date format — 31-05-2025</li>
+        </ul>
+      </div>
+      <div class="breakdown-box fp">
+        <div class="btitle">⚠ Wrong Flags</div>
+        <div class="bcount">2</div>
+        <ul>
+          <li>Flagged "Social Echo: 440" — correct value</li>
+          <li>Flagged "March" as shortform M</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: ISSUES BY SLIDE -->
+  <div id="tab-issues" class="tab-panel">
+
+    <div class="slide-section">
+      <div class="slide-header"><h2>Slide 1</h2><span class="issue-count">3 issues</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><span class="badge badge-red">Content Error</span></td><td>Global Media Coverage on Wells Fargo and Competitors</td><td class="correct">Global Media Coverage on Nando's and Competitors</td></tr>
+          <tr><td>2</td><td><span class="badge badge-red">Draft Artefact</span></td><td>Testing – can you catch this?</td><td class="correct">Remove before distribution</td></tr>
+          <tr><td>3</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>...prompting over 1 K reshares</td><td class="correct">...prompting over 1K reshares</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="slide-section">
+      <div class="slide-header"><h2>Slide 2</h2><span class="issue-count">9 issues</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr><td>4</td><td><span class="badge badge-orange">Currency Format</span></td><td>R 8.3M</td><td class="correct">R8.3M</td></tr>
+          <tr><td>5</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>66.2 B</td><td class="correct">66.2B</td></tr>
+          <tr><td>6</td><td><span class="badge badge-orange">Shortform Spacing</span></td><td>17.9 K</td><td class="correct">17.9K</td></tr>
+          <tr><td>7</td><td><span class="badge badge-orange">Date Format</span></td><td>01/05/2025</td><td class="correct">01 May 2025</td></tr>
+          <tr><td>8</td><td><span class="badge badge-yellow">American English</span></td><td>...data was analysed using</td><td class="correct">...data was analyzed using</td></tr>
+          <tr><td>9</td><td><span class="badge badge-yellow">Grammar</span></td><td>Positive account for 49%</td><td class="correct">Positive sentiment accounts for 49%</td></tr>
+          <tr><td>10</td><td><span class="badge badge-orange">Number Formatting</span></td><td>4218 mentions</td><td class="correct">4,218 mentions</td></tr>
+          <tr><td>11</td><td><span class="badge badge-blue">Data Accuracy</span></td><td>KPI card — Social Echo: 440</td><td class="correct">442</td></tr>
+          <tr><td>12</td><td><span class="badge badge-red">Content Error</span></td><td>Nandos</td><td class="correct">Nando's</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="slide-section">
+      <div class="slide-header"><h2>Slide 3</h2><span class="issue-count">6 issues</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr><td>13</td><td><span class="badge badge-orange">Currency Format</span></td><td>$ 2.1M</td><td class="correct">$2.1M</td></tr>
+          <tr><td>14</td><td><span class="badge badge-orange">Decimal Consistency</span></td><td>8.33M (standard: 1dp)</td><td class="correct">8.3M</td></tr>
+          <tr><td>15</td><td><span class="badge badge-yellow">American English</span></td><td>...content was summarised for</td><td class="correct">...content was summarized for</td></tr>
+          <tr><td>16</td><td><span class="badge badge-grey">Missing Axis Label</span></td><td>Chart — Share of Voice by Brand, Y-axis: No label</td><td class="correct">Add axis label</td></tr>
+          <tr><td>17</td><td><span class="badge badge-purple">Broken Link</span></td><td>https://example.com/report-2024</td><td class="correct">Remove or replace — 404 Not Found</td></tr>
+          <tr><td>18</td><td><span class="badge badge-orange">Date Format</span></td><td>31-05-2025</td><td class="correct">31 May 2025</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="slide-section other-section">
+      <div class="slide-header"><h2>Other Issues</h2><span class="issue-count">1 issue</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr><td>19</td><td><span class="badge badge-pink">Missing Feedback Link</span></td><td>No Satismeter survey link present</td><td class="correct">Add a hyperlink containing https://app.satismeter.com/survey?...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- TAB 3: TOKEN USAGE -->
+  <div id="tab-tokens" class="tab-panel">
+
+    <div class="token-card">
+      <div class="token-card-title">By Rule</div>
+      <table class="token-table">
+        <thead><tr><th>Rule</th><th>Description</th><th class="num">Est. Input</th><th class="num">Est. Output</th><th class="num">Est. Total</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Content Errors</td><td class="num">420</td><td class="num">85</td><td class="num">505</td></tr>
+          <tr><td>2</td><td>Shortform Number Spacing</td><td class="num">310</td><td class="num">40</td><td class="num">350</td></tr>
+          <tr><td>3</td><td>Currency Formatting</td><td class="num">290</td><td class="num">35</td><td class="num">325</td></tr>
+          <tr><td>4</td><td>Date Formatting</td><td class="num">275</td><td class="num">50</td><td class="num">325</td></tr>
+          <tr><td>5</td><td>American English</td><td class="num">340</td><td class="num">45</td><td class="num">385</td></tr>
+          <tr><td>6</td><td>Number Thousand Separator</td><td class="num">260</td><td class="num">30</td><td class="num">290</td></tr>
+          <tr><td>7</td><td>Grammar & Spelling</td><td class="num">380</td><td class="num">70</td><td class="num">450</td></tr>
+          <tr><td>8</td><td>Data Accuracy</td><td class="num">580</td><td class="num">90</td><td class="num">670</td></tr>
+          <tr><td>9</td><td>Decimal Consistency</td><td class="num">295</td><td class="num">38</td><td class="num">333</td></tr>
+          <tr><td>10</td><td>Hyperlink Validation</td><td class="num">180</td><td class="num">42</td><td class="num">222</td></tr>
+          <tr><td>11</td><td>Chart Axis Labels</td><td class="num">410</td><td class="num">30</td><td class="num">440</td></tr>
+          <tr><td>12</td><td>Feedback/Survey Link</td><td class="num">60</td><td class="num">25</td><td class="num">85</td></tr>
+          <tr class="total-row"><td colspan="2">Grand Total</td><td class="num">3,800</td><td class="num">580</td><td class="num">4,380</td></tr>
+        </tbody>
+      </table>
+      <div class="token-footnote">Token estimates are approximations based on characters processed (÷ 4). Actual API token usage may differ.</div>
+    </div>
+
+    <div class="token-card">
+      <div class="token-card-title">By Slide</div>
+      <table class="token-table">
+        <thead><tr><th>Slide</th><th class="num">Est. Input</th><th class="num">Est. Output</th><th class="num">Est. Total</th></tr></thead>
+        <tbody>
+          <tr><td>Slide 1</td><td class="num">920</td><td class="num">185</td><td class="num">1,105</td></tr>
+          <tr><td>Slide 2</td><td class="num">1,540</td><td class="num">260</td><td class="num">1,800</td></tr>
+          <tr><td>Slide 3</td><td class="num">1,100</td><td class="num">110</td><td class="num">1,210</td></tr>
+          <tr><td>Other (deck-level)</td><td class="num">240</td><td class="num">25</td><td class="num">265</td></tr>
+          <tr class="total-row"><td>Grand Total</td><td class="num">3,800</td><td class="num">580</td><td class="num">4,380</td></tr>
+        </tbody>
+      </table>
+      <div class="token-footnote">Token estimates are approximations based on characters processed (÷ 4). Actual API token usage may differ.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">Generated by pptx-qa-evaluator-v2 &nbsp;·&nbsp; 9 Apr 2026</div>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

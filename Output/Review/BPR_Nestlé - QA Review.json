@@ -1,0 +1,277 @@
+{
+  "evaluation_mode": true,
+  "total_issues": 25,
+  "slides": [
+    {
+      "slide": 2,
+      "issue_count": 1,
+      "issues": [
+        {
+          "id": 1,
+          "type": "Content Error",
+          "location": "Table of Contents",
+          "current": "15 Nestlé's Media Presence / 23 Competitive Benchmark",
+          "correct": "Nestlé's Media Presence starts at p.4 in this deck (ToC shows p.15); Competitive Benchmark (p.23) is absent from this 14-slide deck — update page references or add missing section"
+        }
+      ]
+    },
+    {
+      "slide": 3,
+      "issue_count": 1,
+      "issues": [
+        {
+          "id": 2,
+          "type": "Grammar",
+          "location": "Body text, paragraph 6",
+          "current": "...a performance indicating score consisting...",
+          "correct": "...a performance-indicating score consisting..."
+        }
+      ]
+    },
+    {
+      "slide": 5,
+      "issue_count": 2,
+      "issues": [
+        {
+          "id": 3,
+          "type": "Shortform Spacing",
+          "location": "KPI card — Reach",
+          "current": "1.2 B",
+          "correct": "1.2B"
+        },
+        {
+          "id": 4,
+          "type": "Shortform Spacing",
+          "location": "KPI card — Engagement",
+          "current": "58.1 K",
+          "correct": "58.1K"
+        }
+      ]
+    },
+    {
+      "slide": 6,
+      "issue_count": 1,
+      "issues": [
+        {
+          "id": 5,
+          "type": "Grammar",
+          "location": "Body text, paragraph 4",
+          "current": "...Given this opportunity it is vital that...",
+          "correct": "...Given this opportunity, it is vital that..."
+        }
+      ]
+    },
+    {
+      "slide": 7,
+      "issue_count": 3,
+      "issues": [
+        {
+          "id": 6,
+          "type": "Grammar",
+          "location": "Body text, Highlight 1, sentence 1",
+          "current": "Neal Katyal's, corporate lawyer, post about his...",
+          "correct": "Corporate lawyer Neal Katyal's post about his..."
+        },
+        {
+          "id": 7,
+          "type": "Content Error",
+          "location": "Body text, Highlight 1, sentence 2",
+          "current": "...110K views on Twitter.",
+          "correct": "...110K views on X. (platform rebranded July 2023; all other references in this report use \"X\")"
+        },
+        {
+          "id": 8,
+          "type": "Content Error",
+          "location": "Body text, Highlight 2",
+          "current": "@AJPlus (1.2M followers) continued to share...",
+          "correct": "Follower count inconsistent with Slide 5, which states \"@AJPlus (1.3M followers)\" for the same account — verify and align to correct figure"
+        }
+      ]
+    },
+    {
+      "slide": 9,
+      "issue_count": 2,
+      "issues": [
+        {
+          "id": 9,
+          "type": "Shortform Spacing",
+          "location": "Chart — Volume donut, centre label",
+          "current": "n = 1.4 K",
+          "correct": "n = 1.4K"
+        },
+        {
+          "id": 10,
+          "type": "Content Error + Shortform Spacing",
+          "location": "Chart — Reach donut, centre label",
+          "current": "n = 1.5 B",
+          "correct": "n = 1.2B (remove space; verify correct total — KPI shows Reach = 1.2B; same label also copied incorrectly to Engagement chart on Slide 10)"
+        }
+      ]
+    },
+    {
+      "slide": 11,
+      "issue_count": 1,
+      "issues": [
+        {
+          "id": 11,
+          "type": "Grammar",
+          "location": "Body text, paragraph 3",
+          "current": "...Reuters'(44.2M reach) piece on...",
+          "correct": "...Reuters' (44.2M reach) piece on..."
+        }
+      ]
+    },
+    {
+      "slide": 12,
+      "issue_count": 1,
+      "issues": [
+        {
+          "id": 12,
+          "type": "Grammar",
+          "location": "Body text, paragraph 3",
+          "current": "...including syndications the article accounted for...",
+          "correct": "...including syndications, the article accounted for..."
+        }
+      ]
+    },
+    {
+      "slide": 13,
+      "issue_count": 9,
+      "issues": [
+        {
+          "id": 13,
+          "type": "Date Format",
+          "location": "Table, Harvard Business Review, Date",
+          "current": "11-Sep-24",
+          "correct": "11 Sep 2024"
+        },
+        {
+          "id": 14,
+          "type": "Date Format",
+          "location": "Table, Impakter, Date",
+          "current": "05-Sep-24",
+          "correct": "05 Sep 2024"
+        },
+        {
+          "id": 15,
+          "type": "Date Format",
+          "location": "Table, Financial Times, Date",
+          "current": "30-Sep-24",
+          "correct": "30 Sep 2024"
+        },
+        {
+          "id": 16,
+          "type": "Date Format",
+          "location": "Table, Eastern Daily Press, Date",
+          "current": "12-Sep-24",
+          "correct": "12 Sep 2024"
+        },
+        {
+          "id": 17,
+          "type": "Shortform Spacing",
+          "location": "Table, Harvard Business Review, Reach",
+          "current": "5.2 M",
+          "correct": "5.2M"
+        },
+        {
+          "id": 18,
+          "type": "Shortform Spacing",
+          "location": "Table, Impakter, Reach",
+          "current": "76.7 K",
+          "correct": "76.7K"
+        },
+        {
+          "id": 19,
+          "type": "Shortform Spacing",
+          "location": "Table, Financial Times, Reach",
+          "current": "13.3 M",
+          "correct": "13.3M"
+        },
+        {
+          "id": 20,
+          "type": "Shortform Spacing + Decimal Consistency",
+          "location": "Table, Eastern Daily Press, Reach",
+          "current": "1.27 M",
+          "correct": "1.3M (remove space; round to 1dp to match report standard)"
+        },
+        {
+          "id": 21,
+          "type": "Shortform Spacing",
+          "location": "Table, Food Navigator, Reach",
+          "current": "169 K",
+          "correct": "169K"
+        }
+      ]
+    },
+    {
+      "slide": 14,
+      "issue_count": 3,
+      "issues": [
+        {
+          "id": 22,
+          "type": "Date Format",
+          "location": "Table, @MsMaggieMayhem, Date",
+          "current": "03-Sep-24",
+          "correct": "03 Sep 2024"
+        },
+        {
+          "id": 23,
+          "type": "Date Format",
+          "location": "Table, @ajplus, Date",
+          "current": "07-Sep-24",
+          "correct": "07 Sep 2024"
+        },
+        {
+          "id": 24,
+          "type": "Date Format",
+          "location": "Table, @EJENCALADA, Date",
+          "current": "17-Sep-24",
+          "correct": "17 Sep 2024"
+        }
+      ]
+    }
+  ],
+  "other_issues": [
+    {
+      "id": 25,
+      "type": "Missing Feedback Link",
+      "location": "Deck-level",
+      "current": "No Satismeter survey link present in deck",
+      "correct": "Add a hyperlink containing https://app.satismeter.com/survey?..."
+    }
+  ],
+  "token_usage": {
+    "by_rule": [
+      { "rule": 1, "description": "Content Errors", "est_input_tokens": 1250, "est_output_tokens": 300, "est_total_tokens": 1550 },
+      { "rule": 2, "description": "Shortform Number Spacing", "est_input_tokens": 750, "est_output_tokens": 200, "est_total_tokens": 950 },
+      { "rule": 3, "description": "Currency Formatting", "est_input_tokens": 750, "est_output_tokens": 0, "est_total_tokens": 750 },
+      { "rule": 4, "description": "Date Formatting", "est_input_tokens": 500, "est_output_tokens": 250, "est_total_tokens": 750 },
+      { "rule": 5, "description": "American English", "est_input_tokens": 1250, "est_output_tokens": 0, "est_total_tokens": 1250 },
+      { "rule": 6, "description": "Number Thousand Separator", "est_input_tokens": 750, "est_output_tokens": 0, "est_total_tokens": 750 },
+      { "rule": 7, "description": "Grammar & Spelling", "est_input_tokens": 1250, "est_output_tokens": 200, "est_total_tokens": 1450 },
+      { "rule": 8, "description": "Data Accuracy", "est_input_tokens": 0, "est_output_tokens": 0, "est_total_tokens": 0 },
+      { "rule": 9, "description": "Decimal Consistency", "est_input_tokens": 500, "est_output_tokens": 50, "est_total_tokens": 550 },
+      { "rule": 10, "description": "Hyperlink Validation", "est_input_tokens": 125, "est_output_tokens": 0, "est_total_tokens": 125 },
+      { "rule": 11, "description": "Chart Axis Labels", "est_input_tokens": 3750, "est_output_tokens": 50, "est_total_tokens": 3800 },
+      { "rule": 12, "description": "Feedback/Survey Link", "est_input_tokens": 50, "est_output_tokens": 50, "est_total_tokens": 100 },
+      { "rule": 13, "description": "Professional Tone Review", "est_input_tokens": 1250, "est_output_tokens": 500, "est_total_tokens": 1750 }
+    ],
+    "by_slide": [
+      { "slide": 1, "est_input_tokens": 80, "est_output_tokens": 20, "est_total_tokens": 100 },
+      { "slide": 2, "est_input_tokens": 100, "est_output_tokens": 50, "est_total_tokens": 150 },
+      { "slide": 3, "est_input_tokens": 180, "est_output_tokens": 70, "est_total_tokens": 250 },
+      { "slide": 4, "est_input_tokens": 80, "est_output_tokens": 20, "est_total_tokens": 100 },
+      { "slide": 5, "est_input_tokens": 250, "est_output_tokens": 100, "est_total_tokens": 350 },
+      { "slide": 6, "est_input_tokens": 300, "est_output_tokens": 100, "est_total_tokens": 400 },
+      { "slide": 7, "est_input_tokens": 380, "est_output_tokens": 120, "est_total_tokens": 500 },
+      { "slide": 8, "est_input_tokens": 280, "est_output_tokens": 70, "est_total_tokens": 350 },
+      { "slide": 9, "est_input_tokens": 350, "est_output_tokens": 100, "est_total_tokens": 450 },
+      { "slide": 10, "est_input_tokens": 320, "est_output_tokens": 80, "est_total_tokens": 400 },
+      { "slide": 11, "est_input_tokens": 430, "est_output_tokens": 120, "est_total_tokens": 550 },
+      { "slide": 12, "est_input_tokens": 430, "est_output_tokens": 120, "est_total_tokens": 550 },
+      { "slide": 13, "est_input_tokens": 600, "est_output_tokens": 200, "est_total_tokens": 800 },
+      { "slide": 14, "est_input_tokens": 550, "est_output_tokens": 150, "est_total_tokens": 700 }
+    ],
+    "grand_total": { "est_input_tokens": 11175, "est_output_tokens": 1600, "est_total_tokens": 12775 }
+  }
+}

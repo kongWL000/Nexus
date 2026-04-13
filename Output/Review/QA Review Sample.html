@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Review — Nandos BPR - May 2025</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6f8; color: #1a1a2e; font-size: 14px; }
+
+  .header { background: #1a1a2e; color: #fff; padding: 32px 40px; }
+  .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: #a0aec0; margin-bottom: 20px; }
+  .stats { display: flex; gap: 24px; flex-wrap: wrap; }
+  .stat { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 20px; min-width: 120px; }
+  .stat .value { font-size: 28px; font-weight: 700; color: #fff; }
+  .stat .label { font-size: 11px; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  .content { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+
+  .slide-section { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 24px; overflow: hidden; }
+  .slide-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
+  .slide-header h2 { font-size: 15px; font-weight: 600; }
+  .issue-count { background: #eef2ff; color: #4f46e5; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #f8f9fb; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; padding: 10px 16px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+  td { padding: 10px 16px; border-bottom: 1px solid #f7f7f7; vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { width: 40px; font-weight: 600; color: #9ca3af; font-size: 13px; }
+  td:nth-child(2) { width: 160px; }
+  td:nth-child(3), td:nth-child(4) { font-size: 13px; color: #374151; }
+
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+  .badge-red    { background: #fef2f2; color: #dc2626; }
+  .badge-orange { background: #fff7ed; color: #ea580c; }
+  .badge-yellow { background: #fefce8; color: #ca8a04; }
+  .badge-blue   { background: #eff6ff; color: #2563eb; }
+  .badge-purple { background: #faf5ff; color: #7c3aed; }
+  .badge-grey   { background: #f9fafb; color: #6b7280; }
+  .badge-pink   { background: #fdf2f8; color: #db2777; }
+
+  .correct { color: #16a34a; }
+
+  .other-section .slide-header { background: #fafafa; }
+  .other-section .issue-count { background: #fef9c3; color: #854d0e; }
+
+  .footer { text-align: center; font-size: 12px; color: #9ca3af; padding: 24px 40px 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Nandos BPR - May 2025 - Short</h1>
+  <div class="meta">QA Review &nbsp;·&nbsp; 9 Apr 2026</div>
+  <div class="stats">
+    <div class="stat"><div class="value">18</div><div class="label">Total Issues</div></div>
+    <div class="stat"><div class="value">3</div><div class="label">Slides Affected</div></div>
+    <div class="stat"><div class="value">1</div><div class="label">Other Issues</div></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Slide 1 -->
+  <div class="slide-section">
+    <div class="slide-header">
+      <h2>Slide 1</h2>
+      <span class="issue-count">3 issues</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="badge badge-red">Content Error</span></td>
+          <td>Global Media Coverage on Wells Fargo and Competitors</td>
+          <td class="correct">Global Media Coverage on Nando's and Competitors</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="badge badge-red">Draft Artefact</span></td>
+          <td>Testing – can you catch this?</td>
+          <td class="correct">Remove before distribution</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="badge badge-orange">Shortform Spacing</span></td>
+          <td>...prompting over 1 K reshares</td>
+          <td class="correct">...prompting over 1K reshares</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide-section">
+    <div class="slide-header">
+      <h2>Slide 2</h2>
+      <span class="issue-count">9 issues</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>4</td>
+          <td><span class="badge badge-orange">Currency Format</span></td>
+          <td>R 8.3M</td>
+          <td class="correct">R8.3M</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="badge badge-orange">Shortform Spacing</span></td>
+          <td>66.2 B</td>
+          <td class="correct">66.2B</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><span class="badge badge-orange">Shortform Spacing</span></td>
+          <td>17.9 K</td>
+          <td class="correct">17.9K</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><span class="badge badge-orange">Date Format</span></td>
+          <td>01/05/2025</td>
+          <td class="correct">01 May 2025</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><span class="badge badge-yellow">American English</span></td>
+          <td>...data was analysed using</td>
+          <td class="correct">...data was analyzed using</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><span class="badge badge-yellow">Grammar</span></td>
+          <td>Positive account for 49%</td>
+          <td class="correct">Positive sentiment accounts for 49%</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><span class="badge badge-orange">Number Formatting</span></td>
+          <td>4218 mentions</td>
+          <td class="correct">4,218 mentions</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td><span class="badge badge-blue">Data Accuracy</span></td>
+          <td>KPI card — Social Echo: 440</td>
+          <td class="correct">442</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td><span class="badge badge-red">Content Error</span></td>
+          <td>Nandos</td>
+          <td class="correct">Nando's</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="slide-section">
+    <div class="slide-header">
+      <h2>Slide 3</h2>
+      <span class="issue-count">6 issues</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>13</td>
+          <td><span class="badge badge-orange">Currency Format</span></td>
+          <td>$ 2.1M</td>
+          <td class="correct">$2.1M</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td><span class="badge badge-orange">Decimal Consistency</span></td>
+          <td>8.33M (standard: 1dp)</td>
+          <td class="correct">8.3M</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td><span class="badge badge-yellow">American English</span></td>
+          <td>...content was summarised for</td>
+          <td class="correct">...content was summarized for</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td><span class="badge badge-grey">Missing Axis Label</span></td>
+          <td>Chart — Share of Voice by Brand, Y-axis: No label</td>
+          <td class="correct">Add axis label</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td><span class="badge badge-purple">Broken Link</span></td>
+          <td>https://example.com/report-2024</td>
+          <td class="correct">Remove or replace — 404 Not Found</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td><span class="badge badge-orange">Date Format</span></td>
+          <td>31-05-2025</td>
+          <td class="correct">31 May 2025</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Other Issues -->
+  <div class="slide-section other-section">
+    <div class="slide-header">
+      <h2>Other Issues</h2>
+      <span class="issue-count">1 issue</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Type</th><th>Current</th><th>Correct</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>19</td>
+          <td><span class="badge badge-pink">Missing Feedback Link</span></td>
+          <td>No Satismeter survey link present</td>
+          <td class="correct">Add a hyperlink containing https://app.satismeter.com/survey?...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">Generated by pptx-qa-review-v7 &nbsp;·&nbsp; 9 Apr 2026</div>
+
+</body>
+</html>
